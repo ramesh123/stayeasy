@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
-  Box, Button, Typography, AppBar, Toolbar, IconButton,
-  CircularProgress, Alert,
+  Box, Button, Typography, AppBar, Toolbar,
+  CircularProgress, Alert, Paper, Grow, Fade,
 } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useAuth, ROLES } from '../../store/authStore';
+import MarketingPanel from '../../components/splash/MarketingPanel';
 
 export default function OtpPage() {
   const navigate = useNavigate();
@@ -56,101 +56,137 @@ export default function OtpPage() {
   const mins = String(Math.floor(timer / 60)).padStart(2, '0');
   const secs = String(timer % 60).padStart(2, '0');
 
-  const OtpForm = (
-    <Box sx={{ textAlign: 'center', width: '100%', maxWidth: 400 }}>
-      <Box sx={{ fontSize: 64, mb: 2, display: { md: 'none' } }}>📱</Box>
-      <Typography variant="h4" fontWeight={700} mb={1}>Enter OTP</Typography>
-      <Typography variant="body2" color="text.secondary" mb={3}>
-        We sent a 4-digit code to +91 {phone}
-      </Typography>
-
-      {error && <Alert severity="error" sx={{ mb: 2, textAlign: 'left' }}>{error}</Alert>}
-
-      <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mb: 2 }} onPaste={handlePaste}>
-        {otp.map((val, idx) => (
-          <input
-            key={idx} id={`otp-${idx}`} maxLength={1} value={val}
-            onChange={e => handleChange(idx, e.target.value)}
-            onKeyDown={e => {
-              if (e.key === 'Backspace' && !val && idx > 0)
-                document.getElementById(`otp-${idx - 1}`)?.focus();
-            }}
-            style={{
-              width: 56, height: 64, textAlign: 'center', fontSize: 24,
-              fontWeight: 800, border: `2px solid ${val ? '#1976D2' : '#E2E8F0'}`,
-              borderRadius: 10, color: '#1976D2', outline: 'none',
-              background: val ? '#E3F0FC' : '#fff', transition: 'all .15s',
-            }}
-          />
-        ))}
-      </Box>
-
-      <Typography variant="body2" color="text.secondary" mb={3}>
-        Expires in{' '}
-        <Typography component="span" color="primary.main" fontWeight={700} variant="body2">
-          {mins}:{secs}
-        </Typography>
-      </Typography>
-
-      <Button
-        fullWidth variant="contained" size="large"
-        onClick={handleVerify} disabled={otp.some(v => !v) || loading}
-        sx={{ py: 1.5, mb: 1.5 }}
-      >
-        {loading ? <CircularProgress size={22} color="inherit" /> : 'Verify OTP'}
-      </Button>
-      <Button fullWidth variant="text" disabled={timer > 0} onClick={() => setTimer(120)}>
-        {timer > 0 ? `Resend in ${mins}:${secs}` : 'Resend OTP'}
-      </Button>
-    </Box>
-  );
-
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-      {/* Left brand panel — desktop only */}
-      <Box
+    <Box
+      sx={{
+        minHeight: '100vh',
+        background: 'linear-gradient(180deg, #FFFFFF 0%, #EAF3FC 55%, #DCEEFB 100%)',
+      }}
+    >
+      {/* Header */}
+      <AppBar
+        position="sticky"
+        color="transparent"
+        elevation={0}
         sx={{
-          display: { xs: 'none', md: 'flex' },
-          width: '45%',
-          background: 'linear-gradient(160deg, #1976D2 0%, #1256A0 55%, #26A69A 100%)',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          p: 6,
-          position: 'relative',
-          overflow: 'hidden',
+          bgcolor: 'rgba(255,255,255,0.75)',
+          backdropFilter: 'blur(8px)',
+          borderBottom: '1px solid',
+          borderColor: 'divider',
         }}
       >
-        <Box sx={{ position: 'absolute', top: -60, right: -60, width: 240, height: 240, borderRadius: '50%', background: 'rgba(255,255,255,0.06)' }} />
-        <Box sx={{ position: 'absolute', bottom: -80, left: -40, width: 280, height: 280, borderRadius: '50%', background: 'rgba(255,255,255,0.06)' }} />
-        <Box sx={{ position: 'relative', textAlign: 'center' }}>
-          <Box sx={{ fontSize: 64, mb: 2 }}>📱</Box>
-          <Typography variant="h2" sx={{ color: '#fff', fontWeight: 800, mb: 1 }}>Verify your number</Typography>
-          <Typography variant="body1" sx={{ color: 'rgba(255,255,255,0.8)', maxWidth: 280, mx: 'auto' }}>
-            We use OTP verification to keep your account safe and secure
-          </Typography>
-        </Box>
-      </Box>
-
-      {/* Right form area */}
-      <Box sx={{ flex: 1, bgcolor: 'background.default', display: 'flex', flexDirection: 'column' }}>
-        <AppBar
-          position="static" color="transparent" elevation={0}
-          sx={{ borderBottom: '1px solid', borderColor: 'divider', bgcolor: 'background.paper' }}
+        <Toolbar
+          variant="dense"
+          sx={{ justifyContent: 'space-between', maxWidth: 1280, mx: 'auto', width: '100%' }}
         >
-          <Toolbar>
-            <IconButton edge="start" onClick={() => navigate(-1)}><ArrowBackIcon /></IconButton>
-            <Typography variant="h6" sx={{ ml: 1 }}>Verify phone</Typography>
-          </Toolbar>
-        </AppBar>
+          <Box
+            onClick={() => navigate('/home')}
+            sx={{ display: 'flex', alignItems: 'center', gap: 1.25, cursor: 'pointer' }}
+          >
+            <Box
+              sx={{
+                width: 38, height: 38, borderRadius: '10px',
+                background: 'linear-gradient(135deg, #1976D2, #26A69A)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 20, flexShrink: 0,
+              }}
+            >
+              🏠
+            </Box>
+            <Typography variant="h6" fontWeight={800} color="primary.main">
+              StayEasy
+            </Typography>
+          </Box>
+        </Toolbar>
+      </AppBar>
 
-        <Box
-          sx={{
-            flex: 1, display: 'flex', alignItems: 'center',
-            justifyContent: 'center', p: 3,
-          }}
-        >
-          {OtpForm}
+      {/* Body */}
+      <Box
+        sx={{
+          maxWidth: 1280,
+          mx: 'auto',
+          px: { xs: 3, md: 5 },
+          py: { xs: 3, md: 4 },
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          alignItems: { md: 'center' },
+          gap: { xs: 4, md: 4 },
+        }}
+      >
+        {/* Left: marketing section — desktop only */}
+        <Fade in timeout={600}>
+          <Box sx={{ display: { xs: 'none', md: 'block' }, width: '45%' }}>
+            <MarketingPanel
+              title="Verify Your Number"
+              subtitle="We use OTP verification to keep your account safe and secure."
+            />
+          </Box>
+        </Fade>
+
+        {/* Right: OTP card */}
+        <Box sx={{ width: { xs: '100%', md: '55%' }, display: 'flex', justifyContent: 'center' }}>
+          <Grow in timeout={500}>
+            <Paper
+              elevation={0}
+              sx={{
+                width: '100%',
+                maxWidth: 440,
+                borderRadius: '24px',
+                p: { xs: 3, sm: 4 },
+                boxShadow: '0 20px 60px rgba(25,118,210,0.14)',
+                border: '1px solid',
+                borderColor: 'divider',
+                textAlign: 'center',
+              }}
+            >
+              <Box sx={{ fontSize: 52, mb: 1.5 }}>📱</Box>
+              <Typography variant="h3" fontWeight={800} gutterBottom>
+                Enter OTP
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                We sent a 4-digit code to +91 {phone}
+              </Typography>
+
+              {error && <Alert severity="error" sx={{ mb: 2, textAlign: 'left' }}>{error}</Alert>}
+
+              <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mb: 2 }} onPaste={handlePaste}>
+                {otp.map((val, idx) => (
+                  <input
+                    key={idx} id={`otp-${idx}`} maxLength={1} value={val}
+                    onChange={e => handleChange(idx, e.target.value)}
+                    onKeyDown={e => {
+                      if (e.key === 'Backspace' && !val && idx > 0)
+                        document.getElementById(`otp-${idx - 1}`)?.focus();
+                    }}
+                    style={{
+                      width: 56, height: 64, textAlign: 'center', fontSize: 24,
+                      fontWeight: 800, border: `2px solid ${val ? '#1976D2' : '#E2E8F0'}`,
+                      borderRadius: 10, color: '#1976D2', outline: 'none',
+                      background: val ? '#E3F0FC' : '#fff', transition: 'all .15s',
+                    }}
+                  />
+                ))}
+              </Box>
+
+              <Typography variant="body2" color="text.secondary" mb={3}>
+                Expires in{' '}
+                <Typography component="span" color="primary.main" fontWeight={700} variant="body2">
+                  {mins}:{secs}
+                </Typography>
+              </Typography>
+
+              <Button
+                fullWidth variant="contained" size="large"
+                onClick={handleVerify} disabled={otp.some(v => !v) || loading}
+                sx={{ py: 1.5, mb: 1.5, borderRadius: '14px' }}
+              >
+                {loading ? <CircularProgress size={22} color="inherit" /> : 'Verify OTP'}
+              </Button>
+              <Button fullWidth variant="text" disabled={timer > 0} onClick={() => setTimer(120)}>
+                {timer > 0 ? `Resend in ${mins}:${secs}` : 'Resend OTP'}
+              </Button>
+            </Paper>
+          </Grow>
         </Box>
       </Box>
     </Box>

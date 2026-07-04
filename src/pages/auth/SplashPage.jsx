@@ -42,7 +42,10 @@ export default function SplashPage() {
           variant="dense"
           sx={{ justifyContent: 'space-between', maxWidth: 1280, mx: 'auto', width: '100%' }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
+          <Box
+            onClick={() => navigate('/home')}
+            sx={{ display: 'flex', alignItems: 'center', gap: 1.25, cursor: 'pointer' }}
+          >
             <Box
               sx={{
                 width: 38,

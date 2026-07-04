@@ -51,7 +51,7 @@ export default function SearchCard({ city, onCityChange, onSearch }) {
           placeholder="Search by Hostel Name, Area, Landmark"
           value={query}
           onChange={e => setQuery(e.target.value)}
-          sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: '14px' } }}
+          sx={{ mb: 2.5, '& .MuiOutlinedInput-root': { borderRadius: '14px' } }}
           inputProps={{ 'aria-label': 'Search by hostel name, area, or landmark' }}
           InputProps={{
             startAdornment: (
@@ -69,7 +69,7 @@ export default function SearchCard({ city, onCityChange, onSearch }) {
           }}
         />
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, mb: 2.5 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, mb: 2.5 }}>
           <FormControl fullWidth size="small">
             <InputLabel id="splash-city-label">Location</InputLabel>
             <Select

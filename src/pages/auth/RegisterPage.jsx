@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Box, Button, TextField, Typography, Chip, Stack,
-  AppBar, Toolbar, IconButton, CircularProgress, Alert,
+  Box, Button, TextField, Typography,
+  AppBar, Toolbar, CircularProgress, Alert,
+  Paper, Grow, Fade, Radio, RadioGroup, FormControlLabel,
 } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { ROLES, useAuth } from '../../store/authStore';
 import MarketingPanel from '../../components/splash/MarketingPanel';
 
 const ROLE_OPTIONS = [
-  { value: ROLES.END_USER, label: '🧑 Tenant', desc: 'Looking for a room' },
-  { value: ROLES.HOSTEL_OWNER, label: '🏨 Hostel owner', desc: 'Manage hostel listings' },
-  { value: ROLES.BACHELOR_OWNER, label: '🏠 Room owner', desc: 'Rent bachelor rooms' },
+  { value: ROLES.END_USER, label: 'Tenant', desc: 'Looking for a room' },
+  { value: ROLES.HOSTEL_OWNER, label: 'Hostel Owner', desc: 'Manage hostel listings' },
+  { value: ROLES.BACHELOR_OWNER, label: 'Room Sharing', desc: 'Rent bachelor rooms' },
 ];
 
 export default function RegisterPage() {
@@ -41,125 +41,175 @@ export default function RegisterPage() {
   };
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-      {/* Left brand panel — desktop only */}
-      <Box
+    <Box
+      sx={{
+        minHeight: '100vh',
+        background: 'linear-gradient(180deg, #FFFFFF 0%, #EAF3FC 55%, #DCEEFB 100%)',
+      }}
+    >
+      {/* Header */}
+      <AppBar
+        position="sticky"
+        color="transparent"
+        elevation={0}
         sx={{
-          display: { xs: 'none', md: 'flex' },
-          width: '45%',
-          background: 'linear-gradient(180deg, #FFFFFF 0%, #EAF3FC 55%, #DCEEFB 100%)',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          p: { md: 5, lg: 6 },
-          borderRight: '1px solid',
+          bgcolor: 'rgba(255,255,255,0.75)',
+          backdropFilter: 'blur(8px)',
+          borderBottom: '1px solid',
           borderColor: 'divider',
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, mb: 3 }}>
+        <Toolbar
+          variant="dense"
+          sx={{ justifyContent: 'space-between', maxWidth: 1280, mx: 'auto', width: '100%' }}
+        >
           <Box
+            onClick={() => navigate('/home')}
+            sx={{ display: 'flex', alignItems: 'center', gap: 1.25, cursor: 'pointer' }}
+          >
+            <Box
+              sx={{
+                width: 38, height: 38, borderRadius: '10px',
+                background: 'linear-gradient(135deg, #1976D2, #26A69A)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 20, flexShrink: 0,
+              }}
+            >
+              🏠
+            </Box>
+            <Typography variant="h6" fontWeight={800} color="primary.main">
+              StayEasy
+            </Typography>
+          </Box>
+
+          <Button
+            onClick={() => navigate('/login')}
+            variant="outlined"
+            size="small"
             sx={{
-              width: 38, height: 38, borderRadius: '10px',
-              background: 'linear-gradient(135deg, #1976D2, #26A69A)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 20, flexShrink: 0,
+              fontWeight: 600, textTransform: 'none', borderRadius: '20px',
+              minWidth: 'auto', px: { xs: 1.25, sm: 2 },
             }}
           >
-            🏠
+            Login
+          </Button>
+        </Toolbar>
+      </AppBar>
+
+      {/* Body */}
+      <Box
+        sx={{
+          maxWidth: 1280,
+          mx: 'auto',
+          px: { xs: 3, md: 5 },
+          py: { xs: 3, md: 4 },
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          alignItems: { md: 'center' },
+          gap: { xs: 4, md: 4 },
+        }}
+      >
+        {/* Left: marketing section — desktop only */}
+        <Fade in timeout={600}>
+          <Box sx={{ display: { xs: 'none', md: 'block' }, width: '45%' }}>
+            <MarketingPanel
+              title="Join StayEasy Today"
+              subtitle="Create your free account to search, save and connect with verified owners in seconds."
+            />
           </Box>
-          <Typography variant="h6" fontWeight={800} color="primary.main">
-            StayEasy
-          </Typography>
-        </Box>
-        <MarketingPanel
-          title="Join StayEasy Today"
-          subtitle="Create your free account to search, save and connect with verified owners in seconds."
-        />
-      </Box>
+        </Fade>
 
-      {/* Right form area */}
-      <Box sx={{ flex: 1, bgcolor: 'background.default', display: 'flex', flexDirection: 'column' }}>
-        <AppBar
-          position="static" color="transparent" elevation={0}
-          sx={{ borderBottom: '1px solid', borderColor: 'divider', bgcolor: 'background.paper' }}
-        >
-          <Toolbar>
-            <IconButton edge="start" onClick={() => navigate('/')}><ArrowBackIcon /></IconButton>
-            <Typography variant="h6" sx={{ ml: 1 }}>Create account</Typography>
-          </Toolbar>
-        </AppBar>
-
-        <Box sx={{ flex: 1, display: 'flex', alignItems: { md: 'center' }, justifyContent: 'center' }}>
-          <Box sx={{ p: 2.5, width: '100%', maxWidth: 500 }}>
-            {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
-
-            <Typography
-              variant="h4" fontWeight={700}
-              sx={{ mb: 2.5, display: { xs: 'none', md: 'block' } }}
+        {/* Right: register card */}
+        <Box sx={{ width: { xs: '100%', md: '55%' }, display: 'flex', justifyContent: 'center' }}>
+          <Grow in timeout={500}>
+            <Paper
+              elevation={0}
+              sx={{
+                width: '100%',
+                maxWidth: 500,
+                borderRadius: '24px',
+                p: { xs: 3, sm: 4 },
+                boxShadow: '0 20px 60px rgba(25,118,210,0.14)',
+                border: '1px solid',
+                borderColor: 'divider',
+              }}
             >
-              Create your account
-            </Typography>
+              {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
-            <TextField
-              fullWidth label="Full name"
-              value={form.name} onChange={set('name')}
-              sx={{ mb: 2 }}
-            />
-            <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
-              <TextField label="Code" value="+91" sx={{ width: 80 }} InputProps={{ readOnly: true }} />
-              <TextField
-                fullWidth label="Phone number" value={form.phone}
-                onChange={e => setForm(p => ({ ...p, phone: e.target.value.replace(/\D/g, '').slice(0, 10) }))}
-              />
-            </Box>
-            <TextField
-              fullWidth label="Email (optional)" type="email"
-              value={form.email} onChange={set('email')}
-              sx={{ mb: 2.5 }}
-            />
-
-            <Typography variant="subtitle2" gutterBottom>I am a</Typography>
-            <Stack spacing={1} sx={{ mb: 3 }}>
-              {ROLE_OPTIONS.map(r => (
-                <Box
-                  key={r.value}
-                  onClick={() => setForm(p => ({ ...p, role: r.value }))}
-                  sx={{
-                    p: 1.5, borderRadius: 2, cursor: 'pointer',
-                    border: '2px solid',
-                    borderColor: form.role === r.value ? 'primary.main' : 'divider',
-                    bgcolor: form.role === r.value ? 'primary.light' : 'background.paper',
-                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                    transition: 'all .15s',
-                  }}
-                >
-                  <Box>
-                    <Typography variant="body1" fontWeight={600}>{r.label}</Typography>
-                    <Typography variant="caption" color="text.secondary">{r.desc}</Typography>
-                  </Box>
-                  {form.role === r.value && (
-                    <Chip label="Selected" size="small" color="primary" />
-                  )}
-                </Box>
-              ))}
-            </Stack>
-
-            <Button
-              fullWidth variant="contained" size="large"
-              onClick={handleSubmit} disabled={loading}
-              sx={{ py: 1.5 }}
-            >
-              {loading ? <CircularProgress size={22} color="inherit" /> : 'Send OTP to verify →'}
-            </Button>
-            <Typography variant="body2" textAlign="center" sx={{ mt: 2, color: 'text.secondary' }}>
-              Already have an account?{' '}
-              <Typography
-                component="span" color="primary.main" fontWeight={600}
-                sx={{ cursor: 'pointer' }} onClick={() => navigate('/login')}
-              >
-                Login
+              <Typography variant="h3" fontWeight={800} gutterBottom>
+                Create your account
               </Typography>
-            </Typography>
-          </Box>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                Join StayEasy to find or list your perfect stay.
+              </Typography>
+
+              <TextField
+                fullWidth label="Full name"
+                value={form.name} onChange={set('name')}
+                sx={{ mb: 2 }}
+              />
+              <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+                <TextField label="Code" value="+91" sx={{ width: 80 }} InputProps={{ readOnly: true }} />
+                <TextField
+                  fullWidth label="Phone number" value={form.phone}
+                  onChange={e => setForm(p => ({ ...p, phone: e.target.value.replace(/\D/g, '').slice(0, 10) }))}
+                />
+              </Box>
+              <TextField
+                fullWidth label="Email (optional)" type="email"
+                value={form.email} onChange={set('email')}
+                sx={{ mb: 2.5 }}
+              />
+
+              <Typography variant="subtitle2" gutterBottom>I am a</Typography>
+              <RadioGroup
+                row
+                value={form.role}
+                onChange={e => setForm(p => ({ ...p, role: e.target.value }))}
+                sx={{ flexWrap: { xs: 'wrap', sm: 'nowrap' }, gap: 1, mb: 3 }}
+              >
+                {ROLE_OPTIONS.map(r => (
+                  <FormControlLabel
+                    key={r.value}
+                    value={r.value}
+                    control={<Radio size="small" />}
+                    label={
+                      <Box>
+                        <Typography variant="body2" fontWeight={600}>{r.label}</Typography>
+                        <Typography variant="caption" color="text.secondary">{r.desc}</Typography>
+                      </Box>
+                    }
+                    sx={{
+                      flex: { xs: '1 1 calc(50% - 8px)', sm: 1 },
+                      m: 0, py: 1, pr: 1, borderRadius: 2,
+                      border: '2px solid',
+                      borderColor: form.role === r.value ? 'primary.main' : 'divider',
+                      bgcolor: form.role === r.value ? 'primary.light' : 'background.paper',
+                      transition: 'all .15s',
+                      alignItems: 'center',
+                    }}
+                  />
+                ))}
+              </RadioGroup>
+
+              <Button
+                fullWidth variant="contained" size="large"
+                onClick={handleSubmit} disabled={loading}
+                sx={{ py: 1.5, borderRadius: '14px' }}
+              >
+                {loading ? <CircularProgress size={22} color="inherit" /> : 'Send OTP to verify →'}
+              </Button>
+              <Typography variant="body2" textAlign="center" sx={{ mt: 2, color: 'text.secondary' }}>
+                Already have an account?{' '}
+                <Typography
+                  component="span" color="primary.main" fontWeight={600}
+                  sx={{ cursor: 'pointer' }} onClick={() => navigate('/login')}
+                >
+                  Login
+                </Typography>
+              </Typography>
+            </Paper>
+          </Grow>
         </Box>
       </Box>
     </Box>
