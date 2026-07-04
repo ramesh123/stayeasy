@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import {
   Card, CardContent, Box, Typography,
   Chip, IconButton, Stack,
@@ -28,7 +30,7 @@ const ROOM_COLORS = [
 ];
 
 export default function RoomCard({ room, variant = 'vertical', onFavoriteGate }) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { isFavorite, toggleFavorite } = useRooms();
   const fav = isFavorite(room.id);
   const colorIndex = parseInt(room.id) % ROOM_COLORS.length;
@@ -41,7 +43,7 @@ export default function RoomCard({ room, variant = 'vertical', onFavoriteGate })
   if (variant === 'horizontal') {
     return (
       <Card
-        onClick={() => navigate(`/room/${room.id}`)}
+        onClick={() => router.push(`/room/${room.id}`)}
         sx={{
           display: 'flex', gap: 0, cursor: 'pointer',
           mb: 1.5,
@@ -112,7 +114,7 @@ export default function RoomCard({ room, variant = 'vertical', onFavoriteGate })
   }
 
   return (
-    <Card onClick={() => navigate(`/room/${room.id}`)} sx={{ cursor: 'pointer', height: '100%' }}>
+    <Card onClick={() => router.push(`/room/${room.id}`)} sx={{ cursor: 'pointer', height: '100%' }}>
       <Box sx={{ position: 'relative' }}>
         <Box
           sx={{

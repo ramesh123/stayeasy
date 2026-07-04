@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, usePathname } from 'next/navigation';
 import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
@@ -16,8 +18,8 @@ const NAV_ITEMS = [
 ];
 
 export default function BottomNav() {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
   const value = NAV_ITEMS.findIndex(n => pathname.startsWith(n.path));
 
   return (
@@ -27,7 +29,7 @@ export default function BottomNav() {
     >
       <BottomNavigation
         value={value === -1 ? 0 : value}
-        onChange={(_, idx) => navigate(NAV_ITEMS[idx].path)}
+        onChange={(_, idx) => router.push(NAV_ITEMS[idx].path)}
         showLabels
       >
         {NAV_ITEMS.map(item => (

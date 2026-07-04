@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import {
   Box, Typography, InputBase, IconButton, Button, Paper,
   Avatar, Menu, MenuItem, Divider,
@@ -20,7 +22,7 @@ const NAV_LINKS = [
 ];
 
 export default function AppHeader() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { isAuthenticated, user, logout } = useAuth();
   const [city, setCity] = useState('Hyderabad');
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -31,7 +33,7 @@ export default function AppHeader() {
   const handleLogout = () => {
     setMenuAnchor(null);
     logout();
-    navigate('/');
+    router.push('/');
   };
 
   return (
@@ -46,7 +48,7 @@ export default function AppHeader() {
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
           <Box
-            onClick={() => navigate('/home')}
+            onClick={() => router.push('/home')}
             sx={{
               width: 36, height: 36, borderRadius: '10px',
               bgcolor: 'rgba(255,255,255,0.18)',
@@ -84,7 +86,7 @@ export default function AppHeader() {
           {NAV_LINKS.map(link => (
             <Typography
               key={link.path}
-              onClick={() => navigate(link.path)}
+              onClick={() => router.push(link.path)}
               sx={{
                 color: 'rgba(255,255,255,0.9)', fontWeight: 600, fontSize: '0.9rem',
                 cursor: 'pointer', '&:hover': { color: '#fff' },
@@ -118,7 +120,7 @@ export default function AppHeader() {
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
               transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             >
-              <MenuItem onClick={() => { setMenuAnchor(null); navigate('/profile'); }}>
+              <MenuItem onClick={() => { setMenuAnchor(null); router.push('/profile'); }}>
                 <PersonIcon fontSize="small" sx={{ mr: 1.25 }} /> Profile
               </MenuItem>
               <Divider />
@@ -129,7 +131,7 @@ export default function AppHeader() {
           </>
         ) : (
           <Button
-            onClick={() => navigate('/login')}
+            onClick={() => router.push('/login')}
             variant="outlined"
             size="small"
             sx={{
@@ -157,11 +159,11 @@ export default function AppHeader() {
           <InputBase
             placeholder={`Search in ${city}, area or hostel name…`}
             sx={{ flex: 1, fontSize: '0.875rem' }}
-            onFocus={() => navigate('/search')}
+            onFocus={() => router.push('/search')}
           />
           <IconButton
             size="small"
-            onClick={() => navigate('/search')}
+            onClick={() => router.push('/search')}
             sx={{ color: 'primary.main' }}
           >
             <TuneIcon sx={{ fontSize: 20 }} />

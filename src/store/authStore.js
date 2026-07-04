@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext(null);
@@ -11,6 +13,7 @@ export const ROLES = {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isGuest, setIsGuest] = useState(false);
+  const [pendingAuth, setPendingAuth] = useState(null);
 
   const login = (userData) => {
     setUser(userData);
@@ -31,7 +34,10 @@ export function AuthProvider({ children }) {
   const role = user?.role || null;
 
   return (
-    <AuthContext.Provider value={{ user, isGuest, isAuthenticated, role, login, loginAsGuest, logout }}>
+    <AuthContext.Provider value={{
+      user, isGuest, isAuthenticated, role, login, loginAsGuest, logout,
+      pendingAuth, setPendingAuth,
+    }}>
       {children}
     </AuthContext.Provider>
   );

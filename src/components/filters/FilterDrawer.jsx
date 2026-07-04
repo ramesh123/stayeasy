@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import {
   SwipeableDrawer, Box, Typography, Button, Slider,

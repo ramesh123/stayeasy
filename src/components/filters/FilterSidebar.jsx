@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Box, Typography, Button, Divider } from '@mui/material';
 import { useRooms } from '../../store/roomsStore';
