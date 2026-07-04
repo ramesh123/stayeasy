@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
-import Sidebar, { SIDEBAR_WIDTH } from './Sidebar';
+import AppHeader from './AppHeader';
 import BottomNav from './BottomNav';
 
 export default function AppLayout({ children }) {
@@ -9,16 +9,15 @@ export default function AppLayout({ children }) {
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'background.default' }}>
-      {!isMobile && <Sidebar />}
       <Box
         component="main"
         sx={{
           flex: 1,
           minWidth: 0,
-          ml: { md: `${SIDEBAR_WIDTH}px` },
           pb: { xs: 8, md: 0 },
         }}
       >
+        <AppHeader />
         {children}
       </Box>
       {isMobile && <BottomNav />}

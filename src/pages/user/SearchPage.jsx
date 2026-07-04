@@ -84,7 +84,7 @@ export default function SearchPage() {
           </Box>
         </AppBar>
 
-        <Box sx={{ display: 'flex', gap: 2.5, p: { xs: 2, md: 3 } }}>
+        <Box sx={{ display: 'flex', gap: 2.5, px: { xs: 2, md: 4 }, py: { xs: 2, md: 3 }, maxWidth: 1200, mx: 'auto' }}>
           {/* Desktop filter sidebar */}
           <Box sx={{ display: { xs: 'none', md: 'block' } }}>
             <FilterSidebar />

@@ -77,7 +77,7 @@ export default function ManageRoomsPage() {
           </Box>
         </AppBar>
 
-        <Box sx={{ p: { xs: 2, md: 3 }, maxWidth: 1200, mx: 'auto' }}>
+        <Box sx={{ px: { xs: 2, md: 4 }, py: { xs: 2, md: 3 }, maxWidth: 1200, mx: 'auto' }}>
           <Grid container spacing={{ xs: 1.5, md: 2 }}>
             {filtered.map(room => (
               <Grid item xs={6} sm={4} md={3} key={room.id}>

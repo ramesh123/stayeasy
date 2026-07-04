@@ -382,7 +382,7 @@ export default function RoomDetailPage() {
       <Box
         sx={{
           display: { xs: 'none', md: 'flex' },
-          gap: 3, p: 3, maxWidth: 1200, mx: 'auto',
+          gap: 3, px: { xs: 2, md: 4 }, py: 3, maxWidth: 1200, mx: 'auto',
           alignItems: 'flex-start',
         }}
       >

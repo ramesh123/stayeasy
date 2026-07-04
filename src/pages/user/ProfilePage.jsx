@@ -57,52 +57,61 @@ export default function ProfilePage() {
   return (
     <AppLayout>
       <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
-        {/* Header */}
-        <Box
-          sx={{
-            background: 'linear-gradient(135deg, #1976D2, #1256A0)',
-            py: { xs: 4, md: 5 },
-            px: 2,
-            textAlign: 'center',
-          }}
+        <AppBar
+          position="static" color="default" elevation={0}
+          sx={{ borderBottom: '1px solid', borderColor: 'divider', bgcolor: 'background.paper' }}
         >
-          <Avatar
-            sx={{
-              width: { xs: 80, md: 96 },
-              height: { xs: 80, md: 96 },
-              bgcolor: 'rgba(255,255,255,0.25)',
-              border: '3px solid rgba(255,255,255,0.6)',
-              fontSize: { xs: 28, md: 34 },
-              fontWeight: 700,
-              mx: 'auto', mb: 1.5,
-            }}
-          >
-            {initials}
-          </Avatar>
-          <Typography variant="h5" sx={{ color: '#fff', fontWeight: 700 }}>{user?.name}</Typography>
-          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)' }}>
-            +91 {user?.phone}
-          </Typography>
-          <Box sx={{ mt: 1 }}>
-            <Chip
-              label={
-                user?.role === 'end_user' ? 'Tenant'
-                  : user?.role === 'hostel_owner' ? 'Hostel Owner'
-                  : 'Room Owner'
-              }
-              size="small"
-              sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: '#fff', fontSize: '0.75rem' }}
-            />
-          </Box>
-        </Box>
+          <Toolbar><Typography variant="h6" fontWeight={600}>Profile</Typography></Toolbar>
+        </AppBar>
 
         <Box
           sx={{
-            p: { xs: 2, md: 3 },
-            maxWidth: { md: 800 },
+            px: { xs: 2, md: 4 },
+            py: { xs: 2, md: 3 },
+            maxWidth: 1200,
             mx: 'auto',
           }}
         >
+          {/* Profile summary */}
+          <Box
+            sx={{
+              display: 'flex', alignItems: 'center', gap: 2,
+              bgcolor: 'background.paper', borderRadius: 2,
+              p: { xs: 2, md: 2.5 }, mb: 2.5,
+              border: '1px solid', borderColor: 'divider',
+            }}
+          >
+            <Avatar
+              sx={{
+                width: { xs: 64, md: 76 },
+                height: { xs: 64, md: 76 },
+                bgcolor: 'primary.main',
+                fontSize: { xs: 22, md: 26 },
+                fontWeight: 700,
+                flexShrink: 0,
+              }}
+            >
+              {initials}
+            </Avatar>
+            <Box sx={{ minWidth: 0 }}>
+              <Typography variant="h5" fontWeight={700} noWrap>{user?.name}</Typography>
+              <Typography variant="body2" color="text.secondary">
+                +91 {user?.phone}
+              </Typography>
+              <Chip
+                label={
+                  user?.role === 'end_user' ? 'Tenant'
+                    : user?.role === 'hostel_owner' ? 'Hostel Owner'
+                    : 'Room Owner'
+                }
+                size="small"
+                color="primary"
+                variant="outlined"
+                sx={{ mt: 1, fontSize: '0.75rem' }}
+              />
+            </Box>
+          </Box>
+
           <Grid container spacing={2.5}>
             {/* Account section */}
             <Grid item xs={12} md={6}>
