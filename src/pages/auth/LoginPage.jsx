@@ -8,6 +8,7 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { ROLES } from '../../store/authStore';
+import MarketingPanel from '../../components/splash/MarketingPanel';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -30,24 +31,30 @@ export default function LoginPage() {
         sx={{
           display: { xs: 'none', md: 'flex' },
           width: '45%',
-          background: 'linear-gradient(160deg, #1976D2 0%, #1256A0 55%, #26A69A 100%)',
+          background: 'linear-gradient(180deg, #FFFFFF 0%, #EAF3FC 55%, #DCEEFB 100%)',
           flexDirection: 'column',
-          alignItems: 'center',
           justifyContent: 'center',
-          p: 6,
-          position: 'relative',
-          overflow: 'hidden',
+          p: { md: 5, lg: 6 },
+          borderRight: '1px solid',
+          borderColor: 'divider',
         }}
       >
-        <Box sx={{ position: 'absolute', top: -60, right: -60, width: 240, height: 240, borderRadius: '50%', background: 'rgba(255,255,255,0.06)' }} />
-        <Box sx={{ position: 'absolute', bottom: -80, left: -40, width: 280, height: 280, borderRadius: '50%', background: 'rgba(255,255,255,0.06)' }} />
-        <Box sx={{ position: 'relative', textAlign: 'center' }}>
-          <Box sx={{ fontSize: 56, mb: 2 }}>🏠</Box>
-          <Typography variant="h2" sx={{ color: '#fff', fontWeight: 800, mb: 1 }}>StayEasy</Typography>
-          <Typography variant="body1" sx={{ color: 'rgba(255,255,255,0.8)', maxWidth: 300, mx: 'auto' }}>
-            Your trusted platform for finding hostels and bachelor rooms
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, mb: 3 }}>
+          <Box
+            sx={{
+              width: 38, height: 38, borderRadius: '10px',
+              background: 'linear-gradient(135deg, #1976D2, #26A69A)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 20, flexShrink: 0,
+            }}
+          >
+            🏠
+          </Box>
+          <Typography variant="h6" fontWeight={800} color="primary.main">
+            StayEasy
           </Typography>
         </Box>
+        <MarketingPanel />
       </Box>
 
       {/* Right form area */}

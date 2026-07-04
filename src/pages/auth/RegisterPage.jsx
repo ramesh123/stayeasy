@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { ROLES, useAuth } from '../../store/authStore';
+import MarketingPanel from '../../components/splash/MarketingPanel';
 
 const ROLE_OPTIONS = [
   { value: ROLES.END_USER, label: '🧑 Tenant', desc: 'Looking for a room' },
@@ -45,33 +46,34 @@ export default function RegisterPage() {
       <Box
         sx={{
           display: { xs: 'none', md: 'flex' },
-          width: '40%',
-          background: 'linear-gradient(160deg, #1976D2 0%, #1256A0 55%, #26A69A 100%)',
+          width: '45%',
+          background: 'linear-gradient(180deg, #FFFFFF 0%, #EAF3FC 55%, #DCEEFB 100%)',
           flexDirection: 'column',
-          alignItems: 'center',
           justifyContent: 'center',
-          p: 6,
-          position: 'relative',
-          overflow: 'hidden',
+          p: { md: 5, lg: 6 },
+          borderRight: '1px solid',
+          borderColor: 'divider',
         }}
       >
-        <Box sx={{ position: 'absolute', top: -60, right: -60, width: 240, height: 240, borderRadius: '50%', background: 'rgba(255,255,255,0.06)' }} />
-        <Box sx={{ position: 'absolute', bottom: -80, left: -40, width: 280, height: 280, borderRadius: '50%', background: 'rgba(255,255,255,0.06)' }} />
-        <Box sx={{ position: 'relative', textAlign: 'center' }}>
-          <Box sx={{ fontSize: 56, mb: 2 }}>🏠</Box>
-          <Typography variant="h2" sx={{ color: '#fff', fontWeight: 800, mb: 1 }}>StayEasy</Typography>
-          <Typography variant="body1" sx={{ color: 'rgba(255,255,255,0.8)', maxWidth: 280, mx: 'auto', mb: 3 }}>
-            Join thousands of tenants and owners on StayEasy
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, mb: 3 }}>
+          <Box
+            sx={{
+              width: 38, height: 38, borderRadius: '10px',
+              background: 'linear-gradient(135deg, #1976D2, #26A69A)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 20, flexShrink: 0,
+            }}
+          >
+            🏠
+          </Box>
+          <Typography variant="h6" fontWeight={800} color="primary.main">
+            StayEasy
           </Typography>
-          <Stack spacing={1} sx={{ textAlign: 'left' }}>
-            {['Free to join and use', 'Direct contact with owners', 'Verified listings only'].map(t => (
-              <Box key={t} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Box sx={{ color: '#4CAF50', fontSize: 18 }}>✓</Box>
-                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.85)' }}>{t}</Typography>
-              </Box>
-            ))}
-          </Stack>
         </Box>
+        <MarketingPanel
+          title="Join StayEasy Today"
+          subtitle="Create your free account to search, save and connect with verified owners in seconds."
+        />
       </Box>
 
       {/* Right form area */}

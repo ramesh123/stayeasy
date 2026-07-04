@@ -1,170 +1,140 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Typography, Stack } from '@mui/material';
+import { Box, AppBar, Toolbar, Typography, Button, Fade } from '@mui/material';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useAuth } from '../../store/authStore';
-
-const FEATURES = [
-  { icon: '🔍', text: 'Search hostels & PG rooms near you' },
-  { icon: '💬', text: 'Contact owners directly via call or WhatsApp' },
-  { icon: '❤️', text: 'Save your favourite listings' },
-  { icon: '✅', text: 'Verified listings with real details' },
-];
+import LocationPickerDialog from '../../components/common/LocationPickerDialog';
+import MarketingPanel from '../../components/splash/MarketingPanel';
+import SearchCard from '../../components/splash/SearchCard';
 
 export default function SplashPage() {
   const navigate = useNavigate();
   const { loginAsGuest } = useAuth();
+  const [city, setCity] = useState('Hyderabad');
+  const [pickerOpen, setPickerOpen] = useState(false);
 
-  const handleGuest = () => {
+  const handleSearch = () => {
     loginAsGuest();
-    navigate('/home');
+    navigate('/search');
   };
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-      {/* Left brand panel — desktop only */}
-      <Box
+    <Box
+      sx={{
+        minHeight: '100vh',
+        background: 'linear-gradient(180deg, #FFFFFF 0%, #EAF3FC 55%, #DCEEFB 100%)',
+      }}
+    >
+      {/* Header */}
+      <AppBar
+        position="sticky"
+        color="transparent"
+        elevation={0}
         sx={{
-          display: { xs: 'none', md: 'flex' },
-          width: '50%',
-          background: 'linear-gradient(160deg, #1976D2 0%, #1256A0 55%, #26A69A 100%)',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          p: 6,
-          position: 'relative',
-          overflow: 'hidden',
+          bgcolor: 'rgba(255,255,255,0.75)',
+          backdropFilter: 'blur(8px)',
+          borderBottom: '1px solid',
+          borderColor: 'divider',
         }}
       >
-        {/* Decorative circles */}
-        <Box sx={{ position: 'absolute', top: -80, right: -80, width: 300, height: 300, borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }} />
-        <Box sx={{ position: 'absolute', bottom: -60, left: -60, width: 240, height: 240, borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }} />
-
-        <Box sx={{ position: 'relative', textAlign: 'center', maxWidth: 440 }}>
-          <Box
-            sx={{
-              width: 80, height: 80,
-              background: 'rgba(255,255,255,0.2)',
-              borderRadius: '22px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 40, mb: 2.5, mx: 'auto',
-              border: '2px solid rgba(255,255,255,0.3)',
-              backdropFilter: 'blur(8px)',
-            }}
-          >
-            🏠
+        <Toolbar
+          variant="dense"
+          sx={{ justifyContent: 'space-between', maxWidth: 1280, mx: 'auto', width: '100%' }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
+            <Box
+              sx={{
+                width: 38,
+                height: 38,
+                borderRadius: '10px',
+                background: 'linear-gradient(135deg, #1976D2, #26A69A)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 20,
+                flexShrink: 0,
+              }}
+            >
+              🏠
+            </Box>
+            <Typography variant="h6" fontWeight={800} color="primary.main">
+              StayEasy
+            </Typography>
           </Box>
-          <Typography variant="h1" sx={{ color: '#fff', fontWeight: 800, fontSize: '2.75rem', mb: 1 }}>
-            StayEasy
-          </Typography>
-          <Typography variant="h5" sx={{ color: 'rgba(255,255,255,0.85)', fontWeight: 400, mb: 4, lineHeight: 1.5 }}>
-            Find hostels & bachelor rooms near you in seconds
-          </Typography>
 
-          <Stack spacing={1.5}>
-            {FEATURES.map(f => (
-              <Box key={f.text} sx={{ display: 'flex', alignItems: 'center', gap: 1.5, textAlign: 'left' }}>
-                <Box sx={{ fontSize: 20, width: 32, flexShrink: 0, textAlign: 'center' }}>{f.icon}</Box>
-                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.85)' }}>{f.text}</Typography>
-              </Box>
-            ))}
-          </Stack>
-        </Box>
-      </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0, sm: 1 } }}>
+            <Button
+              onClick={() => navigate('/login')}
+              sx={{
+                color: 'text.primary', fontWeight: 600, textTransform: 'none',
+                minWidth: 'auto', px: { xs: 0.75, sm: 1.5 },
+                fontSize: { xs: '0.75rem', sm: '0.875rem' },
+              }}
+            >
+              Login
+            </Button>
+            <Button
+              onClick={() => navigate('/register')}
+              variant="outlined"
+              size="small"
+              sx={{
+                fontWeight: 600, textTransform: 'none', borderRadius: '20px',
+                minWidth: 'auto', px: { xs: 1, sm: 2 },
+                fontSize: { xs: '0.75rem', sm: '0.875rem' },
+              }}
+            >
+              Register
+            </Button>
+            <Button
+              onClick={() => setPickerOpen(true)}
+              startIcon={<LocationOnIcon fontSize="small" />}
+              endIcon={<KeyboardArrowDownIcon fontSize="small" />}
+              aria-haspopup="dialog"
+              sx={{
+                color: 'text.primary', fontWeight: 600, textTransform: 'none',
+                minWidth: 'auto', px: { xs: 0.75, sm: 1.5 },
+                '& .MuiButton-endIcon': { ml: { xs: 0, sm: 0.5 } },
+              }}
+            >
+              <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>{city}</Box>
+            </Button>
+          </Box>
+        </Toolbar>
+      </AppBar>
 
-      {/* Right form panel */}
+      {/* Body */}
       <Box
         sx={{
-          flex: 1,
+          maxWidth: 1280,
+          mx: 'auto',
+          px: { xs: 3, md: 5 },
+          py: { xs: 3, md: 4 },
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          // Mobile: gradient background
-          background: {
-            xs: 'linear-gradient(160deg, #1976D2 0%, #1256A0 60%, #26A69A 100%)',
-            md: 'background.paper',
-          },
-          bgcolor: { md: 'background.paper' },
-          p: { xs: 4, md: 6 },
+          flexDirection: { xs: 'column', md: 'row' },
+          alignItems: { md: 'center' },
+          gap: { xs: 4, md: 4 },
         }}
       >
-        {/* Mobile-only brand mark */}
-        <Box sx={{ display: { md: 'none' }, textAlign: 'center', mb: 4 }}>
-          <Box
-            sx={{
-              width: 90, height: 90,
-              background: 'rgba(255,255,255,0.2)',
-              borderRadius: '24px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 44, mb: 2, mx: 'auto',
-              border: '2px solid rgba(255,255,255,0.35)',
-              backdropFilter: 'blur(8px)',
-            }}
-          >
-            🏠
+        {/* Left: marketing section */}
+        <Fade in timeout={600}>
+          <Box sx={{ width: { xs: '100%', md: '45%' } }}>
+            <MarketingPanel />
           </Box>
-          <Typography variant="h1" sx={{ color: '#fff', fontWeight: 800, fontSize: { xs: '2rem', sm: '2.5rem' }, mb: 0.75 }}>
-            StayEasy
-          </Typography>
-          <Typography variant="body1" sx={{ color: 'rgba(255,255,255,0.8)', maxWidth: 280, mx: 'auto' }}>
-            Find hostels & bachelor rooms near you in seconds
-          </Typography>
-        </Box>
+        </Fade>
 
-        {/* Desktop heading */}
-        <Box sx={{ display: { xs: 'none', md: 'block' }, textAlign: 'center', mb: 4, width: '100%', maxWidth: 380 }}>
-          <Typography variant="h3" color="text.primary" fontWeight={800} mb={0.75}>
-            Welcome back 👋
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Sign in or create an account to get started
-          </Typography>
+        {/* Right: search card */}
+        <Box sx={{ width: { xs: '100%', md: '55%' }, display: 'flex', justifyContent: 'center' }}>
+          <SearchCard city={city} onCityChange={setCity} onSearch={handleSearch} />
         </Box>
-
-        <Stack spacing={1.5} sx={{ width: '100%', maxWidth: 380 }}>
-          <Button
-            variant="contained"
-            size="large"
-            onClick={() => navigate('/login')}
-            sx={{
-              py: 1.5, fontWeight: 700,
-              background: { xs: '#fff', md: 'primary.main' },
-              color: { xs: 'primary.main', md: '#fff' },
-              '&:hover': {
-                background: { xs: 'rgba(255,255,255,0.92)', md: 'primary.dark' },
-              },
-            }}
-          >
-            Login
-          </Button>
-          <Button
-            variant="outlined"
-            size="large"
-            onClick={() => navigate('/register')}
-            sx={{
-              py: 1.5, fontWeight: 700,
-              borderColor: { xs: 'rgba(255,255,255,0.5)', md: 'primary.main' },
-              color: { xs: '#fff', md: 'primary.main' },
-              '&:hover': {
-                borderColor: { xs: '#fff', md: 'primary.dark' },
-                background: { xs: 'rgba(255,255,255,0.08)', md: 'primary.light' },
-              },
-            }}
-          >
-            Create account
-          </Button>
-          <Button
-            variant="text"
-            onClick={handleGuest}
-            sx={{
-              color: { xs: 'rgba(255,255,255,0.75)', md: 'text.secondary' },
-              fontWeight: 400, fontSize: '0.8125rem',
-            }}
-          >
-            Continue as guest
-          </Button>
-        </Stack>
       </Box>
+
+      <LocationPickerDialog
+        open={pickerOpen}
+        onClose={() => setPickerOpen(false)}
+        currentCity={city}
+        onSelect={setCity}
+      />
     </Box>
   );
 }
