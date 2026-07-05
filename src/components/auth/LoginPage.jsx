@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   Box, Button, TextField, Typography, Divider,
   AppBar, Toolbar, CircularProgress,
@@ -16,6 +17,11 @@ export default function LoginPage() {
   const { setPendingAuth } = useAuth();
   const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Send OTP triggers async validation + navigation, so it can't be a plain link — prefetch instead.
+  useEffect(() => {
+    router.prefetch('/otp');
+  }, [router]);
 
   const handleSend = () => {
     if (phone.length < 10) return;
@@ -51,8 +57,9 @@ export default function LoginPage() {
           sx={{ justifyContent: 'space-between', maxWidth: 1280, mx: 'auto', width: '100%' }}
         >
           <Box
-            onClick={() => router.push('/home')}
-            sx={{ display: 'flex', alignItems: 'center', gap: 1.25, cursor: 'pointer' }}
+            component={Link}
+            href="/home"
+            sx={{ display: 'flex', alignItems: 'center', gap: 1.25, cursor: 'pointer', textDecoration: 'none' }}
           >
             <Box
               sx={{
@@ -70,7 +77,8 @@ export default function LoginPage() {
           </Box>
 
           <Button
-            onClick={() => router.push('/register')}
+            component={Link}
+            href="/register"
             variant="outlined"
             size="small"
             sx={{
@@ -156,8 +164,8 @@ export default function LoginPage() {
               <Typography variant="body2" textAlign="center" color="text.secondary">
                 New here?{' '}
                 <Typography
-                  component="span" color="primary.main" fontWeight={600}
-                  sx={{ cursor: 'pointer' }} onClick={() => router.push('/register')}
+                  component={Link} href="/register" color="primary.main" fontWeight={600}
+                  sx={{ cursor: 'pointer', textDecoration: 'none' }}
                 >
                   Create account
                 </Typography>

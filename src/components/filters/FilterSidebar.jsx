@@ -33,8 +33,7 @@ export default function FilterSidebar() {
         p: 2.5,
         position: 'sticky',
         top: 80,
-        maxHeight: 'calc(100vh - 100px)',
-        overflowY: 'auto',
+        overflow: 'hidden',
         alignSelf: 'flex-start',
       }}
     >

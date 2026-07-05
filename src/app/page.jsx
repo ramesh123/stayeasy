@@ -1,4 +1,4 @@
-import SplashPage from '../views/auth/SplashPage';
+import SplashPage from '../components/auth/SplashPage';
 
 export const metadata = {
   title: 'StayEasy — Find Hostels & Bachelor Rooms Near You',

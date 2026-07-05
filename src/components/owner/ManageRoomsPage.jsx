@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   Box, AppBar, Toolbar, IconButton, Typography, Button,
   Grid, Card, CardContent, Chip, Stack,
@@ -58,7 +59,8 @@ export default function ManageRoomsPage() {
             <Button
               variant="contained" size="small"
               startIcon={<AddIcon />}
-              onClick={() => router.push('/owner/add-room')}
+              component={Link}
+              href="/owner/add-room"
             >
               Add room
             </Button>
@@ -115,7 +117,8 @@ export default function ManageRoomsPage() {
                         size="small" variant="outlined"
                         startIcon={<EditIcon sx={{ fontSize: 14 }} />}
                         sx={{ flex: 1, py: 0.5, fontSize: '0.7rem' }}
-                        onClick={() => router.push('/owner/add-room')}
+                        component={Link}
+                        href="/owner/add-room"
                       >
                         Edit
                       </Button>
@@ -139,7 +142,8 @@ export default function ManageRoomsPage() {
               <Typography variant="h6" gutterBottom>No rooms in this category</Typography>
               <Button
                 variant="contained"
-                onClick={() => router.push('/owner/add-room')}
+                component={Link}
+                href="/owner/add-room"
                 startIcon={<AddIcon />}
               >
                 Add a room

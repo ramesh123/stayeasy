@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   Box, Button, TextField, Typography,
   AppBar, Toolbar, CircularProgress, Alert,
@@ -22,6 +23,11 @@ export default function RegisterPage() {
   const [form, setForm] = useState({ name: '', phone: '', email: '', role: ROLES.END_USER });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Send OTP triggers async validation + navigation, so it can't be a plain link — prefetch instead.
+  useEffect(() => {
+    router.prefetch('/otp');
+  }, [router]);
 
   const set = (k) => (e) => setForm(p => ({ ...p, [k]: e.target.value }));
 
@@ -67,8 +73,9 @@ export default function RegisterPage() {
           sx={{ justifyContent: 'space-between', maxWidth: 1280, mx: 'auto', width: '100%' }}
         >
           <Box
-            onClick={() => router.push('/home')}
-            sx={{ display: 'flex', alignItems: 'center', gap: 1.25, cursor: 'pointer' }}
+            component={Link}
+            href="/home"
+            sx={{ display: 'flex', alignItems: 'center', gap: 1.25, cursor: 'pointer', textDecoration: 'none' }}
           >
             <Box
               sx={{
@@ -86,7 +93,8 @@ export default function RegisterPage() {
           </Box>
 
           <Button
-            onClick={() => router.push('/login')}
+            component={Link}
+            href="/login"
             variant="outlined"
             size="small"
             sx={{
@@ -205,8 +213,8 @@ export default function RegisterPage() {
               <Typography variant="body2" textAlign="center" sx={{ mt: 2, color: 'text.secondary' }}>
                 Already have an account?{' '}
                 <Typography
-                  component="span" color="primary.main" fontWeight={600}
-                  sx={{ cursor: 'pointer' }} onClick={() => router.push('/login')}
+                  component={Link} href="/login" color="primary.main" fontWeight={600}
+                  sx={{ cursor: 'pointer', textDecoration: 'none' }}
                 >
                   Login
                 </Typography>

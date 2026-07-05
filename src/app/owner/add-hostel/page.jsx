@@ -1,5 +1,5 @@
 import OwnerGate from '../../../components/auth/OwnerGate';
-import AddHostelPage from '../../../views/owner/AddHostelPage';
+import AddHostelPage from '../../../components/owner/AddHostelPage';
 
 export const metadata = {
   title: 'Add Hostel',

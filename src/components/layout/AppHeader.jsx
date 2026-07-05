@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   Box, Typography, InputBase, IconButton, Button, Paper,
   Avatar, Menu, MenuItem, Divider,
@@ -30,6 +31,12 @@ export default function AppHeader() {
 
   const initials = user?.name?.split(' ').map(w => w[0]).join('').toUpperCase() || 'U';
 
+  // Search bar and logout navigate programmatically rather than via a real link — warm them up eagerly.
+  useEffect(() => {
+    router.prefetch('/search');
+    router.prefetch('/');
+  }, [router]);
+
   const handleLogout = () => {
     setMenuAnchor(null);
     logout();
@@ -48,7 +55,8 @@ export default function AppHeader() {
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
           <Box
-            onClick={() => router.push('/home')}
+            component={Link}
+            href="/home"
             sx={{
               width: 36, height: 36, borderRadius: '10px',
               bgcolor: 'rgba(255,255,255,0.18)',
@@ -86,10 +94,11 @@ export default function AppHeader() {
           {NAV_LINKS.map(link => (
             <Typography
               key={link.path}
-              onClick={() => router.push(link.path)}
+              component={Link}
+              href={link.path}
               sx={{
                 color: 'rgba(255,255,255,0.9)', fontWeight: 600, fontSize: '0.9rem',
-                cursor: 'pointer', '&:hover': { color: '#fff' },
+                cursor: 'pointer', textDecoration: 'none', '&:hover': { color: '#fff' },
               }}
             >
               {link.label}
@@ -120,7 +129,7 @@ export default function AppHeader() {
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
               transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             >
-              <MenuItem onClick={() => { setMenuAnchor(null); router.push('/profile'); }}>
+              <MenuItem component={Link} href="/profile" onClick={() => setMenuAnchor(null)}>
                 <PersonIcon fontSize="small" sx={{ mr: 1.25 }} /> Profile
               </MenuItem>
               <Divider />
@@ -131,7 +140,8 @@ export default function AppHeader() {
           </>
         ) : (
           <Button
-            onClick={() => router.push('/login')}
+            component={Link}
+            href="/login"
             variant="outlined"
             size="small"
             sx={{

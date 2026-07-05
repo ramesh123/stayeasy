@@ -4,6 +4,7 @@ const nextConfig = {
     emotion: true,
   },
   outputFileTracingRoot: __dirname,
+  devIndicators: false,
 };
 
 module.exports = nextConfig;

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   Box, Button, Typography, AppBar, Toolbar,
   CircularProgress, Alert, Paper, Grow, Fade,
@@ -25,6 +26,12 @@ export default function OtpPage() {
     const t = setTimeout(() => setTimer(p => p - 1), 1000);
     return () => clearTimeout(t);
   }, [timer]);
+
+  // Verify OTP navigates conditionally after an async step — prefetch both possible destinations.
+  useEffect(() => {
+    router.prefetch('/home');
+    router.prefetch('/owner/dashboard');
+  }, [router]);
 
   const handleChange = (idx, val) => {
     if (!/^\d*$/.test(val)) return;
@@ -80,8 +87,9 @@ export default function OtpPage() {
           sx={{ justifyContent: 'space-between', maxWidth: 1280, mx: 'auto', width: '100%' }}
         >
           <Box
-            onClick={() => router.push('/home')}
-            sx={{ display: 'flex', alignItems: 'center', gap: 1.25, cursor: 'pointer' }}
+            component={Link}
+            href="/home"
+            sx={{ display: 'flex', alignItems: 'center', gap: 1.25, cursor: 'pointer', textDecoration: 'none' }}
           >
             <Box
               sx={{

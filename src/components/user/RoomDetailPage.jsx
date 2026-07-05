@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   Box, Typography, IconButton, Button, Chip, Stack,
   Divider, Avatar, AppBar, Toolbar, Snackbar, Alert, Paper,
@@ -43,7 +44,7 @@ export default function RoomDetailPage() {
       <AppLayout>
         <Box sx={{ p: 3, textAlign: 'center', pt: 10 }}>
           <Typography variant="h5">Room not found</Typography>
-          <Button onClick={() => router.push('/search')} sx={{ mt: 2 }}>Back to search</Button>
+          <Button component={Link} href="/search" sx={{ mt: 2 }}>Back to search</Button>
         </Box>
       </AppLayout>
     );

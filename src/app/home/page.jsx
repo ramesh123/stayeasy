@@ -1,4 +1,4 @@
-import HomePage from '../../views/user/HomePage';
+import HomePage from '../../components/user/HomePage';
 
 export const metadata = {
   title: 'Find Your Stay',

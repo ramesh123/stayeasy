@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Box, AppBar, Toolbar, IconButton, Typography, TextField,
@@ -25,6 +25,11 @@ export default function AddRoomPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState({});
+
+  // Save success navigates after a delay — prefetch the destination up front.
+  useEffect(() => {
+    router.prefetch('/owner/rooms');
+  }, [router]);
 
   const set = k => e => setForm(p => ({ ...p, [k]: e.target.value }));
 

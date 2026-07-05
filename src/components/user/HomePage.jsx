@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Box, Typography } from '@mui/material';
 import { useRooms } from '../../store/roomsStore';
 import RoomCard from '../../components/common/RoomCard';
@@ -15,7 +15,6 @@ const CATEGORIES = [
 ];
 
 export default function HomePage() {
-  const router = useRouter();
   const { rooms } = useRooms();
   const [activeCategory, setActiveCategory] = useState('hostel');
 
@@ -49,8 +48,11 @@ export default function HomePage() {
           {CATEGORIES.map(cat => (
             <Box
               key={cat.type}
-              onClick={() => { setActiveCategory(cat.type); router.push('/search'); }}
+              component={Link}
+              href="/search"
+              onClick={() => setActiveCategory(cat.type)}
               sx={{
+                textDecoration: 'none',
                 minWidth: { xs: 80, md: 100 },
                 p: { xs: 1.5, md: 2 },
                 textAlign: 'center',
@@ -87,7 +89,7 @@ export default function HomePage() {
           <Typography variant="subtitle2" color="text.secondary">Recently added hostels</Typography>
           <Typography
             variant="caption" color="primary.main" fontWeight={600}
-            sx={{ cursor: 'pointer' }} onClick={() => router.push('/search')}
+            component={Link} href="/search" sx={{ cursor: 'pointer', textDecoration: 'none' }}
           >
             See all
           </Typography>
@@ -129,7 +131,7 @@ export default function HomePage() {
           <Typography variant="subtitle2" color="text.secondary">Recently added room share</Typography>
           <Typography
             variant="caption" color="primary.main" fontWeight={600}
-            sx={{ cursor: 'pointer' }} onClick={() => router.push('/search')}
+            component={Link} href="/search" sx={{ cursor: 'pointer', textDecoration: 'none' }}
           >
             See all
           </Typography>

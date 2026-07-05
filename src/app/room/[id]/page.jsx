@@ -1,4 +1,4 @@
-import RoomDetailPage from '../../../views/user/RoomDetailPage';
+import RoomDetailPage from '../../../components/user/RoomDetailPage';
 import { getRoomById } from '../../../data/rooms';
 
 export async function generateMetadata({ params }) {

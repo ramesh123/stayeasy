@@ -1,5 +1,5 @@
 import OwnerGate from '../../../components/auth/OwnerGate';
-import AddRoomPage from '../../../views/owner/AddRoomPage';
+import AddRoomPage from '../../../components/owner/AddRoomPage';
 
 export const metadata = {
   title: 'Add Room',

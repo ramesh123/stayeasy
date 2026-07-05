@@ -1,4 +1,4 @@
-import LoginPage from '../../views/auth/LoginPage';
+import LoginPage from '../../components/auth/LoginPage';
 
 export const metadata = {
   title: 'Login',

@@ -1,5 +1,5 @@
 import OwnerGate from '../../../components/auth/OwnerGate';
-import OwnerDashboardPage from '../../../views/owner/OwnerDashboardPage';
+import OwnerDashboardPage from '../../../components/owner/OwnerDashboardPage';
 
 export const metadata = {
   title: 'Owner Dashboard',

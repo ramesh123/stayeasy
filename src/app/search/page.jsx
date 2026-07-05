@@ -1,4 +1,4 @@
-import SearchPage from '../../views/user/SearchPage';
+import SearchPage from '../../components/user/SearchPage';
 
 export const metadata = {
   title: 'Search Hostels & Bachelor Rooms',

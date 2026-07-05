@@ -1,4 +1,4 @@
-import OtpPage from '../../views/auth/OtpPage';
+import OtpPage from '../../components/auth/OtpPage';
 
 export const metadata = {
   title: 'Verify OTP',

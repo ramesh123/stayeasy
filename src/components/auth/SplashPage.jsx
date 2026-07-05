@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Box, AppBar, Toolbar, Typography, Button, Fade } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -15,6 +16,11 @@ export default function SplashPage() {
   const { loginAsGuest } = useAuth();
   const [city, setCity] = useState('Hyderabad');
   const [pickerOpen, setPickerOpen] = useState(false);
+
+  // Search Rooms triggers loginAsGuest() + navigation, so it can't be a plain link — prefetch instead.
+  useEffect(() => {
+    router.prefetch('/search');
+  }, [router]);
 
   const handleSearch = () => {
     loginAsGuest();
@@ -45,8 +51,9 @@ export default function SplashPage() {
           sx={{ justifyContent: 'space-between', maxWidth: 1280, mx: 'auto', width: '100%' }}
         >
           <Box
-            onClick={() => router.push('/home')}
-            sx={{ display: 'flex', alignItems: 'center', gap: 1.25, cursor: 'pointer' }}
+            component={Link}
+            href="/home"
+            sx={{ display: 'flex', alignItems: 'center', gap: 1.25, cursor: 'pointer', textDecoration: 'none' }}
           >
             <Box
               sx={{
@@ -70,7 +77,8 @@ export default function SplashPage() {
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0, sm: 1 } }}>
             <Button
-              onClick={() => router.push('/login')}
+              component={Link}
+              href="/login"
               sx={{
                 color: 'text.primary', fontWeight: 600, textTransform: 'none',
                 minWidth: 'auto', px: { xs: 0.75, sm: 1.5 },
@@ -80,7 +88,8 @@ export default function SplashPage() {
               Login
             </Button>
             <Button
-              onClick={() => router.push('/register')}
+              component={Link}
+              href="/register"
               variant="outlined"
               size="small"
               sx={{

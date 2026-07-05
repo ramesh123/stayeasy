@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Box, Typography, AppBar, Toolbar, Button } from '@mui/material';
 import { useRooms } from '../../store/roomsStore';
 import { useAuth } from '../../store/authStore';
@@ -9,7 +9,6 @@ import RoomCard from '../../components/common/RoomCard';
 import AppLayout from '../../components/layout/AppLayout';
 
 export default function FavoritesPage() {
-  const router = useRouter();
   const { rooms, favorites } = useRooms();
   const { isAuthenticated } = useAuth();
   const savedRooms = rooms.filter(r => favorites.includes(r.id));
@@ -41,7 +40,7 @@ export default function FavoritesPage() {
               <Typography variant="body2" color="text.secondary" mb={3}>
                 Sign in to save and access your favourite listings
               </Typography>
-              <Button variant="contained" onClick={() => router.push('/login')}>Login now</Button>
+              <Button variant="contained" component={Link} href="/login">Login now</Button>
             </Box>
           ) : savedRooms.length === 0 ? (
             <Box sx={{ textAlign: 'center', py: 8 }}>
@@ -50,7 +49,7 @@ export default function FavoritesPage() {
               <Typography variant="body2" color="text.secondary" mb={3}>
                 Tap the heart on any listing to save it here
               </Typography>
-              <Button variant="contained" onClick={() => router.push('/search')}>Browse rooms</Button>
+              <Button variant="contained" component={Link} href="/search">Browse rooms</Button>
             </Box>
           ) : (
             <Box

@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   Box, Typography, AppBar, Toolbar, Avatar, Button,
   List, ListItem, ListItemIcon, ListItemText,
@@ -26,6 +27,11 @@ export default function ProfilePage() {
   const [darkMode, setDarkMode] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
 
+  // Sign out triggers logout() + navigation, so it can't be a plain link — prefetch instead.
+  useEffect(() => {
+    router.prefetch('/');
+  }, [router]);
+
   const handleLogout = () => {
     logout();
     router.push('/');
@@ -47,7 +53,7 @@ export default function ProfilePage() {
             <Typography variant="body2" color="text.secondary" mb={3}>
               Login to access your profile and saved listings
             </Typography>
-            <Button variant="contained" onClick={() => router.push('/login')}>Login</Button>
+            <Button variant="contained" component={Link} href="/login">Login</Button>
           </Box>
         </Box>
       </AppLayout>
@@ -132,7 +138,7 @@ export default function ProfilePage() {
                     <ListItemText primary="Edit profile" />
                     <ChevronRightIcon color="disabled" />
                   </ListItem>
-                  <ListItem button divider onClick={() => router.push('/favorites')}>
+                  <ListItem button divider component={Link} href="/favorites">
                     <ListItemIcon sx={{ minWidth: 36 }}><FavoriteIcon color="error" /></ListItemIcon>
                     <ListItemText primary="Saved rooms" />
                     <ChevronRightIcon color="disabled" />

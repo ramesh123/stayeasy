@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   Box, Typography, AppBar, Toolbar, IconButton, Avatar,
   Card, CardContent, Grid, Button, LinearProgress, Divider,
@@ -29,7 +29,6 @@ const INQUIRIES = [
 ];
 
 export default function OwnerDashboardPage() {
-  const router = useRouter();
   const { user } = useAuth();
   const [tab, setTab] = useState(0);
 
@@ -83,10 +82,11 @@ export default function OwnerDashboardPage() {
                 ].map(a => (
                   <Grid item xs={4} sm={3} md={2} key={a.label}>
                     <Card
-                      onClick={() => a.path && router.push(a.path)}
+                      {...(a.path ? { component: Link, href: a.path } : {})}
                       sx={{
                         textAlign: 'center', p: { xs: 1.5, md: 2 },
                         cursor: a.path ? 'pointer' : 'default',
+                        textDecoration: 'none', color: 'inherit',
                         '&:hover': a.path ? { bgcolor: 'primary.light' } : {},
                       }}
                     >

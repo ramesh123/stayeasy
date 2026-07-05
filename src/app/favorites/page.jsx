@@ -1,4 +1,4 @@
-import FavoritesPage from '../../views/user/FavoritesPage';
+import FavoritesPage from '../../components/user/FavoritesPage';
 
 export const metadata = {
   title: 'Saved Rooms',

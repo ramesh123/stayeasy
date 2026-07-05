@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
@@ -18,7 +19,6 @@ const NAV_ITEMS = [
 ];
 
 export default function BottomNav() {
-  const router = useRouter();
   const pathname = usePathname();
   const value = NAV_ITEMS.findIndex(n => pathname.startsWith(n.path));
 
@@ -27,14 +27,12 @@ export default function BottomNav() {
       sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1100 }}
       elevation={8}
     >
-      <BottomNavigation
-        value={value === -1 ? 0 : value}
-        onChange={(_, idx) => router.push(NAV_ITEMS[idx].path)}
-        showLabels
-      >
+      <BottomNavigation value={value === -1 ? 0 : value} showLabels>
         {NAV_ITEMS.map(item => (
           <BottomNavigationAction
             key={item.label}
+            component={Link}
+            href={item.path}
             label={item.label}
             icon={item.icon}
             sx={{ '&.Mui-selected': { color: 'primary.main' } }}
